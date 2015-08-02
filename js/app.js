@@ -1,4 +1,4 @@
-var app = angular.module('8ball', ['ionic'])
+var app = angular.module('8ball', ['ionic']);
 
 app.run(function ($ionicPlatform) {
 	$ionicPlatform.ready(function () {
@@ -14,7 +14,7 @@ app.run(function ($ionicPlatform) {
 });
 
 
-app.controller('PredictionController', function ($scope) {
+app.controller('PredictionController', function ($scope, $timeout) {
 
 	var predictionList = [
 		"Signs point to yes",
@@ -40,4 +40,15 @@ app.controller('PredictionController', function ($scope) {
 	];
 
 	$scope.prediction = "Tap 8ball for an answer";
+	$scope.answered = true;
+
+	$scope.ask = function() {
+		$scope.answered = false;
+		$scope.prediction = "Asking the Oracle";
+		$timeout(function () {
+			$scope.prediction = predictionList[Math.floor(Math.random() * predictionList.length)];
+			$scope.answered = true;
+		}, 2000);
+
+	};
 });
